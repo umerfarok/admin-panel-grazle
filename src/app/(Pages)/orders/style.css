@@ -1,0 +1,4 @@
+.new {
+  background-color: var(--bg-color-delivered);
+  color: var(--text-color-delivered);
+}

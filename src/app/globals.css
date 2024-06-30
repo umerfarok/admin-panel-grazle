@@ -1,0 +1,72 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif !important;
+}
+
+:root {
+  --bg-color: rgba(247, 0, 0, 0.08);
+  --text-color: rgba(247, 0, 0, 1);
+  --text-color-body: rgba(119, 119, 119, 1);
+  --text-color-body-plus: rgba(0, 198, 18, 1);
+  --text-color-body-minus: rgba(247, 0, 0, 1);
+  --text-color-body-pending: rgba(255, 163, 26, 1);
+  --text-color-body-order: rgba(0, 161, 255, 1);
+  --price-color: #4880ff;
+  --bg-color-delivered: rgba(6, 231, 117, 0.08);
+  --bg-color-pending: rgba(254, 152, 0, 0.2);
+  --bg-color-cancelled: rgba(247, 0, 0, 0.05);
+  --text-color-delivered: #06e775;
+  --text-color-pending: #ffa31a;
+  --text-color-cancelled: #f70000;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: var(--bg-color-cancelled);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #f70000bd;
+  border-radius: 10px;
+}
+
+.ant-slider-rail{
+  background-color: rgba(247, 0, 0, 0.08) !important;
+  height: 15px !important;
+  margin-top: -2px;
+  border-radius: 10px !important;
+}
+
+.ant-slider-track{
+  background-color: var(--text-color-cancelled) !important;
+  height:  15px !important;
+  border-radius: 10px !important;
+  margin-top: -2px !important;
+}
+
+.ant-slider-handle-1::after{
+  background-color: var(--text-color-cancelled) !important;
+  box-shadow: 0 0 0 2px white !important;
+  height: 12px !important;
+  width: 12px !important;
+  margin-top: 2.5px;
+}
+
+.ant-slider-handle-2::after{
+  background-color: var(--text-color-cancelled) !important;
+  box-shadow: 0 0 0 2px white !important;
+  height: 12px !important;
+  width: 12px !important;
+  margin-top: 2.5px;
+}
