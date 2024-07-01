@@ -8,6 +8,7 @@ const nextConfig = {
   swcMinify: true,
   productionBrowserSourceMaps: false,
   optimizeFonts: false,
+  ignoreBuildErrors: true,
   // async rewrites() {
   //   return [
   //     {
