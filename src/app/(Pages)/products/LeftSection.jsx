@@ -17,12 +17,6 @@ const LeftSection = ({
   const [categoryId, setCategoryId] = useState([]);
   const [brandId, setBrandId] = useState([]);
 
-  // const [productTypeFilter, setProductTypeFilter] = useState([
-  //   { id: 0, label: "Simple", status: false },
-  //   { id: 1, label: "Variable", status: false },
-  //   { id: 2, label: "Digital", status: false },
-  // ]);
-
   useEffect(() => {
     onFilterProduct({ category: categoryId[0], brand: brandId[0] });
   }, [brandId, categoryId]);

@@ -4,7 +4,7 @@ import { Circle } from "rc-progress";
 
 import { FaArrowUp, FaArrowDown } from "react-icons/fa6";
 
-const Section1 = () => {
+const Section1 = ({ ordersLength }) => {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-5">
       <div className="flex-1 bg-white px-[20px] py-[30px] rounded-[8px] shadow-sm flex justify-between items-center">
@@ -14,7 +14,7 @@ const Section1 = () => {
             <label className="text-[12px]">33.77 %</label>
           </div>
           <p className="mt-4 mb-1">Total Sales</p>
-          <p className="text-[32px] text-black font-[600]">1000</p>
+          <p className="text-[32px] text-black font-[600]">{ordersLength}</p>
         </div>
         <div className="flex items-center justify-center">
           <Circle

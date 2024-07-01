@@ -32,15 +32,12 @@ const Orders = () => {
     dispatch(updatePageLoader(false));
     dispatch(updatePageNavigation("orders"));
   }, [dispatch]);
-  const fn_viewDetails = (id, oId) => {
-    if (id === selectedCustomer && orderId == oId) {
-      setSelectedCustomer(0);
-      setOrderId(0);
+  const fn_viewDetails = (id) => {
+    if (id === orderId) {
+      return setOrderId(0);
     }
-    setSelectedCustomer(id);
-    setOrderId(oId);
+    setOrderId(id);
   };
-  console.log(allOrders);
 
   useEffect(() => {
     const getAllOrders = async () => {
@@ -166,7 +163,12 @@ const Orders = () => {
                                 }`
                             )}
                           </td>
-                          <td>₹2000</td>
+                          <td>
+                            ₹
+                            {item?.products?.reduce((acc, pro) => {
+                              return acc + pro?.quantity * pro?.price;
+                            }, 0)}
+                          </td>
                           <td>{item?.date}</td>
                           <td className="w-[130px]">
                             <p
@@ -189,14 +191,11 @@ const Orders = () => {
                               alt=""
                               src={tableAction}
                               className="cursor-pointer"
-                              // onClick={() =>
-                              //   fn_viewDetails(product.id, item.id)
-                              // }
+                              onClick={() => fn_viewDetails(item.id)}
                             />
-                            {/* {selectedCustomer === product.id &&
-                              orderId === item.id && (
-                                <ViewDetails id={product.id} />
-                              )} */}
+                            {orderId === item.id && (
+                              <ViewDetails id={item.id} />
+                            )}
                           </td>
                         </tr>
                       </>
@@ -222,7 +221,12 @@ const Orders = () => {
                                 }`
                             )}
                           </td>
-                          <td>₹2000</td>
+                          <td>
+                            ₹
+                            {item?.products?.reduce((acc, pro) => {
+                              return acc + pro?.quantity * pro?.price;
+                            }, 0)}
+                          </td>
                           <td>{item?.date}</td>
                           <td className="w-[130px]">
                             <p
@@ -278,7 +282,12 @@ const Orders = () => {
                                 }`
                             )}
                           </td>
-                          <td>₹2000</td>
+                          <td>
+                            ₹
+                            {item?.products?.reduce((acc, pro) => {
+                              return acc + pro?.quantity * pro?.price;
+                            }, 0)}
+                          </td>
                           <td>{item?.date}</td>
                           <td className="w-[130px]">
                             <p
@@ -334,7 +343,12 @@ const Orders = () => {
                                 }`
                             )}
                           </td>
-                          <td>₹2000</td>
+                          <td>
+                            ₹
+                            {item?.products?.reduce((acc, pro) => {
+                              return acc + pro?.quantity * pro?.price;
+                            }, 0)}
+                          </td>
                           <td>{item?.date}</td>
                           <td className="w-[130px]">
                             <p
@@ -384,18 +398,18 @@ export default Orders;
 
 const ViewDetails = ({ id }) => {
   const navigate = useRouter();
+  const dispatch = useDispatch();
   return (
     <div className="absolute py-[10px] px-[10px] flex flex-col items-center text-[var(--text-color-body)] bg-white rounded-[8px] shadow-md border border-gray-100 w-[max-content] left-[-145px] top-[13px] cursor-pointer">
       <div
         className="flex items-center gap-2.5 w-full px-2 py-1.5 hover:bg-gray-100 rounded-sm"
-        onClick={() => navigate.push(`/orders/${id}`)}
+        onClick={() => {
+          dispatch(updatePageLoader(true));
+          navigate.push(`/orders/${id}`);
+        }}
       >
         <IoEye className="w-[20px] h-[20px]" />
         <p className="text-[14px]">View Details</p>
-      </div>
-      <div className="flex items-center gap-2.5 w-full px-2 py-1.5 hover:bg-gray-100 rounded-sm">
-        <IoEye className="w-[20px] h-[20px]" />
-        <p className="text-[14px]">Cancel Order</p>
       </div>
     </div>
   );

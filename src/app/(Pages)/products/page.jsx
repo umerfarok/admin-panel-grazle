@@ -81,8 +81,10 @@ const Products = () => {
     let allProducts = productRef.current || [];
     let filteredProduct = [];
     filteredProduct = allProducts.filter((item) => {
-      const categoryId = item?.category?.id;
-      const brandId = item?.brand?.id;
+      // const categoryId = item?.category?.id;
+      const categoryId = item?.category_id;
+      // const brandId = item?.brand?.id;
+      const brandId = item?.brand_id;
       const created_at = item?.created_at;
 
       if (!category && !brand) {
@@ -108,8 +110,9 @@ const Products = () => {
 
     const filteredProduct = allProducts.filter((item) => {
       const price = item.price;
-      const categoryId = item?.category?.id;
-      const brandId = item?.brand?.id;
+      // const categoryId = item?.category?.id;
+      const categoryId = item?.category_id;
+      const brandId = item?.brand_id;
       const created_at = item?.created_at;
       const priceLogic = price >= lowPrice && price <= highPrice;
       if (category && brand) {
@@ -210,32 +213,32 @@ const Products = () => {
   // }
   return (
     <>
-      <Loading />
-      <div className="flex flex-col min-h-screen bg-gray-50">
-        <Navbar />
-        <div className="flex-1 flex">
-          <Sidebar />
-          <div className="flex-1 mt-[30px] px-[22px]">
-            <SearchOnTop showButton={true} navigateTo={"/products/add"} />
-            <div className="flex flex-col lg:flex-row gap-[20px] mt-[20px]">
-              <LeftSection
-                allCategories={allCategories}
-                allBrands={allBrands}
-                onFilterProduct={(categoryId) => onFilterProduct(categoryId)}
-                onChangePrice={onChangePrice}
-                lowerPrice={Math.floor(sortedProduct[0]?.price)}
-                higherPrice={Math.floor(
-                  sortedProduct[sortedProduct.length - 1]?.price
-                )}
-              />
-              <RightSection
-                allProducts={allProducts}
-                allCategories={allCategories}
-              />
-            </div>
+    <Loading />
+    <div className="flex flex-col min-h-screen bg-gray-50">
+      <Navbar />
+      <div className="flex-1 flex">
+        <Sidebar />
+        <div className="flex-1 mt-[30px] px-[22px]">
+          <SearchOnTop title="New Product" url="/products/add" />
+          <div className="flex flex-col lg:flex-row gap-[20px] mt-[20px]">
+            <LeftSection
+              allCategories={allCategories}
+              allBrands={allBrands}
+              onFilterProduct={(categoryId) => onFilterProduct(categoryId)}
+              onChangePrice={onChangePrice}
+              lowerPrice={Math.floor(sortedProduct[0]?.price)}
+              higherPrice={Math.floor(
+                sortedProduct[sortedProduct.length - 1]?.price
+              )}
+            />
+            <RightSection
+              allProducts={allProducts}
+              allCategories={allCategories}
+            />
           </div>
         </div>
       </div>
+    </div>
     </>
   );
 };

@@ -16,23 +16,36 @@ import axios from "axios";
 import Loading from "@/components/loading";
 
 const Dashboard = () => {
-  const [allProducts, setAllProducts] = useState([]);
   const dispatch = useDispatch();
+  // const [allProducts, setAllProducts] = useState([]);
+  const [allOrders, setOrders] = useState([]);
+  useEffect(() => {
+    const getAllOrders = async () => {
+      const { data } = await axiosPrivate.get("/admin/orders", {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      });
+
+      setOrders(data?.orders);
+    };
+    !allOrders?.length && getAllOrders();
+  }, [allOrders?.length]);
   useEffect(() => {
     dispatch(updatePageLoader(false));
     dispatch(updatePageNavigation("dashboard"));
   }, [dispatch]);
   useEffect(() => {
-    const getAllProducts = async () => {
-      const { data } = await axiosPrivate.get(`/admin/products`, {
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("token"),
-        },
-      });
-      if (data === undefined) return;
-      !allProducts.length && setAllProducts(data?.products);
-    };
-    getAllProducts();
+    // const getAllProducts = async () => {
+    //   const { data } = await axiosPrivate.get(`/admin/products`, {
+    //     headers: {
+    //       Authorization: "Bearer " + localStorage.getItem("token"),
+    //     },
+    //   });
+    //   if (data === undefined) return;
+    //   !allProducts.length && setAllProducts(data?.products);
+    // };
+    // getAllProducts();
   }, []);
   return (
     <>
@@ -42,8 +55,8 @@ const Dashboard = () => {
         <div className="flex-1 flex">
           <Sidebar />
           <div className="flex-1 mt-[30px] p-[10px] sm:px-[25px]">
-            <Section1 />
-            <Section3 allProducts={allProducts} />
+            <Section1 ordersLength={allOrders?.length || 0} />
+            <Section3 allOrders={allOrders} />
             {/* all data in notepad */}
           </div>
         </div>

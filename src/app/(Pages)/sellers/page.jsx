@@ -9,13 +9,16 @@ import Sidebar from "@/components/sidebar";
 import { updatePageLoader, updatePageNavigation } from "@/features/features";
 
 import electronicLED from "@/assets/Electronic-LED.png";
-import tableAction from "@/assets/svgs/table-action.svg";
+// import tableAction from "@/assets/svgs/table-action.svg";
 import Image from "next/image";
 import { axiosPrivate } from "@/axios";
 import Loading from "@/components/loading";
+// import { useRouter } from "next/navigation";
+// import { IoEye } from "react-icons/io5";
 
 const Sellers = () => {
   const dispatch = useDispatch();
+  // const [sellerId, setSellerId] = useState(0);
   const [selectedTab, setSelectedTab] = useState("recent");
   const [allSellers, setAllSellers] = useState([]);
   const sellerRef = useRef([]);
@@ -34,6 +37,7 @@ const Sellers = () => {
     };
     getAllSellers();
   }, [!selectedTab]);
+
   const filterData = (value) => {
     const tempArr = sellerRef?.current;
     setSelectedTab(value);
@@ -54,6 +58,13 @@ const Sellers = () => {
     dispatch(updatePageLoader(false));
     dispatch(updatePageNavigation("sellers"));
   }, [dispatch]);
+
+  // const fn_viewDetails = (id) => {
+  //   if (id === sellerId) {
+  //     return setSellerId(0);
+  //   }
+  //   setSellerId(id);
+  // };
   return (
     <>
       <Loading />
@@ -87,17 +98,16 @@ const Sellers = () => {
                 >
                   All
                 </p>
-                <p
+                {/* <p
                   className={`cursor-pointer hover:text-[var(--text-color)] font-[500] border-b-[2px] hover:border-[var(--text-color)] ${
                     selectedTab === "top"
                       ? "text-[var(--text-color)] border-[var(--text-color)]"
                       : "text-[var(--text-color-body)] border-transparent"
                   }`}
-                  // onClick={() => setSelectedTab("top")}
                   onClick={() => filterData("top")}
                 >
                   Top
-                </p>
+                </p> */}
               </div>
               <table className="w-[850px] xl:w-[100%]">
                 <thead>
@@ -106,7 +116,7 @@ const Sellers = () => {
                     <td>Email Address</td>
                     <td>Phone Number</td>
                     <td>Status</td>
-                    <td className="w-[80px]">Action</td>
+                    {/* <td className="w-[80px]">Action</td> */}
                   </tr>
                 </thead>
                 <tbody>
@@ -136,21 +146,19 @@ const Sellers = () => {
                           {item?.active ? "Active" : "Pending"}
                         </p>
                       </td>
-                      <td className="px-[17px] relative">
+                      {/* <td className="px-[17px] relative">
                         <Image
                           alt=""
                           src={tableAction}
                           className="cursor-pointer"
+                          onClick={() => fn_viewDetails(item?.id)}
                         />
-                      </td>
+                        {sellerId === item?.id && <ViewDetails id={item.id} />}
+                      </td> */}
                     </tr>
                   ))}
                 </tbody>
               </table>
-              <button onClick={(e) => console.log(e.target.value)} value="1">
-                Add
-              </button>
-              <button value="2">Close</button>
             </div>
           </div>
         </div>
@@ -160,3 +168,22 @@ const Sellers = () => {
 };
 
 export default Sellers;
+
+// const ViewDetails = ({ id }) => {
+//   const navigate = useRouter();
+//   const dispatch = useDispatch();
+//   return (
+//     <div className="absolute py-[10px] px-[10px] flex flex-col items-center text-[var(--text-color-body)] bg-white rounded-[8px] shadow-md border border-gray-100 w-[max-content] left-[-145px] top-[13px] cursor-pointer">
+//       <div
+//         className="flex items-center gap-2.5 w-full px-2 py-1.5 hover:bg-gray-100 rounded-sm"
+//         onClick={() => {
+//           dispatch(updatePageLoader(true));
+//           navigate.push(`/sellers/${id}`);
+//         }}
+//       >
+//         <IoEye className="w-[20px] h-[20px]" />
+//         <p className="text-[14px]">View Details</p>
+//       </div>
+//     </div>
+//   );
+// };

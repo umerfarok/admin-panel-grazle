@@ -5,15 +5,14 @@ import Image from "next/image";
 import { useDispatch } from "react-redux";
 import Navbar from "@/components/navbar";
 import Sidebar from "@/components/sidebar";
-import { updatePageNavigation } from "@/features/features";
+import { updatePageLoader, updatePageNavigation } from "@/features/features";
 import productOne from "@/assets/product-1.png";
 import img from "@/assets/product-1.png";
 import { useParams } from "next/navigation";
 import { axiosPrivate } from "@/axios";
 import Link from "next/link";
 import { toast } from "react-toastify";
-import { Button, Modal, Select, Space } from "antd";
-import axios from "axios";
+import { Modal, Select } from "antd";
 const OrderDetails = () => {
   const [order, setOrder] = useState({});
   const [isPending, setPending] = useState(false);
@@ -30,21 +29,21 @@ const OrderDetails = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
   useEffect(() => {
+    dispatch(updatePageLoader(false));
     dispatch(updatePageNavigation("orders"));
   }, [dispatch]);
-  useEffect(() => {
-    const getSingleOrder = async () => {
-      const { data } = await axiosPrivate.get(`/admin/orders/${id}`, {
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("token"),
-        },
-      });
+  const getSingleOrder = async () => {
+    const { data } = await axiosPrivate.get(`/admin/orders/${id}`, {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    });
 
-      setOrder(data?.order);
-    };
+    setOrder(data?.order);
+  };
+  useEffect(() => {
     getSingleOrder();
   }, []);
-
   async function onUpdateStatus() {
     if (!status) return;
     let formdata = new FormData();
@@ -69,7 +68,7 @@ const OrderDetails = () => {
     console.log(`selected ${value}`);
     setStatus(value);
   };
-  console.log(order);
+  console.log("target ==> ", order);
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
       <Navbar />
@@ -229,7 +228,6 @@ const OrderDetails = () => {
         onCancel={hideModal}
         okText="Change Status"
         cancelText="Cancel"
-        
       >
         <div>
           <Select

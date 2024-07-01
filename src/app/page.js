@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import Image from "next/image";
@@ -8,7 +8,7 @@ import axios from "axios";
 import Link from "next/link";
 
 import { login } from "@/lib";
-import { updateUser } from "../features/features";
+import { updatePageLoader, updateUser } from "../features/features";
 
 import { FaRegEyeSlash, FaRegEye } from "react-icons/fa";
 
@@ -37,6 +37,10 @@ export default function Home() {
       toast.error("Invalid Email or Password");
     }
   }
+
+  useEffect(() => {
+    dispatch(updatePageLoader(false))
+  }, [dispatch])
   return (
     <form
       action={(e) => {handleLogin(e); setLoader(true)}}
